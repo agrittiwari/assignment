@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Navbar from '../Components/Navbar/Navbar'
+import Navbar from '../Components/Navbar/Navbar.jsx'
 import styles from '../styles/Home.module.css'
-import List from '../Components/List'
+import  { List } from '../Components/List'
 
 export default function Home() {
   return (

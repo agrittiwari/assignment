@@ -1,0 +1,11 @@
+.row{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    
+}
+
+.row > li{
+    padding: 12px;
+    width: 120px;
+}
