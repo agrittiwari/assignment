@@ -15,7 +15,7 @@ const Invoice = (props) => {
         <div className={Style.div2}>
           Invoice Bill Component
           
-            {lineItem.map(item => <Item key={item._id} item={item}/>)}
+        {lineItem.map(item => <Item key={item._id} item={item}/>)}
              
 
         </div>

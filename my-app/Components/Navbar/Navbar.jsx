@@ -2,21 +2,21 @@ import React from 'react'
 import Style from './Navbar.module.css'
 import Link from 'next/link'
 
-const Navbar = () => {
+const Navbar = ({href, routeName}) => {
   return (
     <nav className={Style.navigationWrapper}>
         <div>
             <strong>TaxAdda</strong>
         </div>
         <ul className={Style.navigation}>
-    <li className={Style.parent}>
+    {/* <li className={Style.parent}>
         <Link href='/GET'>
         <a className={Style.link}> GET </a>
         </Link>
-        </li>
+        </li> */}
         <li className={Style.parent}>
-        <Link href='/POST'>
-        <a className={Style.link}> POST </a>
+        <Link href={href}>
+        <a className={Style.link}>{routeName} </a>
         </Link>
         </li>
         </ul>

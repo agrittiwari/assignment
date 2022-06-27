@@ -14,7 +14,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <Navbar/>
+        <Navbar href={'/addInvoice'} routeName={'Add Invoice'}/>
        <div className={styles.List}>
         <h1>Invoice List</h1>
         <List/>
