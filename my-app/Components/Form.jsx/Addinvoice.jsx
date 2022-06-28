@@ -1,23 +1,28 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useReducer } from 'react'
+import { invoiceReducer } from '../../invoiceState/invoiceReducer'
 import InvoiceStyle from './Form.module.css'
-
+import initialState from '../../invoiceState/invoiceState'
 
 export const Addinvoice = () => {
+
+    
  
-        const [ name, setName] = useState('')
-        const [ dueDate, setDueData] = useState('')
-        const [ grossAmount, setGrossAmount] =useState('')
-        const [ billNo,setBillNo] = useState('')
-        const [ billDate, setBillDate] = useState('')
-        const [ lineItem, setLineItem] = useState([])
-        const [ gstAmount, setgstAmount] = useState('')
-        const [ netAmount, setNetAmount] = useState('') 
-        const [ notes,setNotes] = useState('')
-        const [ status , setStatus] = useState('')
+    const[state, dispatch] = useReducer(invoiceReducer,initialState)
+
+        const [ name, setName] = useState(initialState.name)
+        const [ dueDate, setDueData] = useState(initialState.dueDate)
+        const [ grossAmount, setGrossAmount] =useState(initialState.grossAmount)
+        const [ billNo,setBillNo] = useState(initialState.billNo)
+        const [ billDate, setBillDate] = useState(initialState.billDate)
+        const [ lineItem, setLineItem] = useState(initialState.lineItem)
+        const [ gstAmount, setgstAmount] = useState(initialState.gstAmount)
+        const [ netAmount, setNetAmount] = useState(initialState.netAmount) 
+        const [ notes,setNotes] = useState(initialState.notes)
+        const [ status , setStatus] = useState(initialState.status)
 
        
-        const [newItem, setNewItem] = useState({productName:'', quantity:'', price:'', amount:'', gstRate:''})
+        const [newItem, setNewItem] = useState({})
     let newInvoice ={
         name, 
         dueDate, 
@@ -32,9 +37,18 @@ export const Addinvoice = () => {
     }
 
  console.log(lineItem)
+//  const callback= newItem =>{
+//     setNewItem(newItem)
+//  }
     const onSubmit = async() =>{
         console.log('submit pressed')
+        
         setLineItem([...lineItem, newItem])
+        dispatch({
+            type:'ADD_INVOICE',
+            payload:newInvoice
+        })
+
         try {
             const res = await fetch('https://rscdev.taxadda.com/api/invoice/add', {
                 method: 'post',    
@@ -42,7 +56,7 @@ export const Addinvoice = () => {
             })
                const status=   await res.json()
          console.log(status)
-               return res.status;    
+            //    return res.status;    
         } catch (err) {
             console.error({msg: err.message})
         }
@@ -54,8 +68,10 @@ export const Addinvoice = () => {
     <div className={InvoiceStyle.invoiceDiv}>
         <div className={InvoiceStyle.itemDiv}>
             
-        <Item newItem={newItem} setNewItem={setNewItem}/>
+        <Item  />
         {console.log(newItem)}
+        {lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
+        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))} 
          </div> 
        <div className={InvoiceStyle.invoiceDiv1}>
         <form onSubmit={onSubmit}>
@@ -111,20 +127,31 @@ export const Addinvoice = () => {
 
 const Item =(props) =>{
     
+    const[state, dispatch] = useReducer(invoiceReducer,initialState.lineItem)
+
     const[productName, setProductName] =useState('');
     const[ quantity, setQuantity] = useState('')
     const[ price, setPrice] = useState('')
     const[ amount,setAmount] = useState('')
     const[gstRate, setGstRate] = useState('')
 
-    
+
+
+    let item = {
+        productName, quantity, price, amount, gstRate
+    }
   
+    console.log(item)
  
     const onItemAdd =() =>{
+       dispatch({
+        type:'ADD_ITEM',
+        payload:item
+       })
         console.log('Item added')
-        props.setNewItem({
-             productName, quantity, price, amount, gstRate
-          })
+    //   console.log(item)
+        // props.onAdd(item)
+       
         }
     return( 
         <div className={InvoiceStyle.itemForm}>
@@ -157,7 +184,7 @@ const Item =(props) =>{
             </ul>
          </form>
          <div><h4>Line Item Details</h4>
-         {console.log(props.newItem.productName)}
+         {/* {console.log(item)} */}
         {/* {props.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
         <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))} */}
             </div>        
