@@ -2,8 +2,9 @@ export const invoiceReducer =(state, action) =>{
     switch (action.type) {
         case 'ADD_INVOICE':{
             return {
-                ...state, ...action.payload,
-                lineItem: state.lineItem,
+                ...state,
+                ...action.payload,
+                //  lineItem: state.lineItem,
             }
         }
             break;
@@ -11,8 +12,7 @@ export const invoiceReducer =(state, action) =>{
             return {
                 ...state,
                 lineItem:[action.payload, ...state.lineItem]
-            }   
-            }
+            }}
             break;
         default:
             break;

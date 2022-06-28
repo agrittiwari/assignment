@@ -9,8 +9,7 @@ export const Addinvoice = () => {
     <div className={InvoiceStyle.invoiceDiv}>
         <div className={InvoiceStyle.itemDiv}>      
         <Item  />
-        {/* {console.log(newItem)} */}
-        {initialState.lineItem.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
+        {initialState.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
         <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))} 
          </div> 
        <RemainingForm/>
@@ -22,18 +21,6 @@ export const Addinvoice = () => {
 const Item =(props) =>{
     
     const[state, dispatch] = useReducer(invoiceReducer,initialState)
-
-    // const[productName, setProductName] =useState('');
-    // const[ quantity, setQuantity] = useState('')
-    // const[ price, setPrice] = useState('')
-    // const[ amount,setAmount] = useState('')
-    // const[gstRate, setGstRate] = useState('')
-
-
-
-    // let item = {
-    //     productName, quantity, price, amount, gstRate
-    // }
     const [newItem, setNewItem] = useState({
         productName:'',
         quantity:'', 
@@ -83,7 +70,7 @@ const Item =(props) =>{
          </form>
          <div><h4>Line Item Details</h4>
          {/* {console.log(item)} */}
-        {state.lineItem.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
+        {initialState.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
         <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))}
             </div>        
      </div>)
@@ -92,20 +79,18 @@ const Item =(props) =>{
 const RemainingForm=()=>{
     const[state, dispatch] = useReducer(invoiceReducer,initialState)
 
-   
-const [newInvoice,setNewInvoice] = useState({
-    name:initialState.name,
-    dueDate:initialState.dueDate,
-       grossAmount:initialState.grossAmount,
-    billNo:initialState.billNo,
-     billDate:initialState.billDate,
-        lineItem:initialState.lineItem,
-       gstAmount:initialState.gstAmount,
-
-    netAmount:initialState.netAmount,
-
-    notes:initialState.notes,
-    status:initialState.status})
+    const [newInvoice,setNewInvoice] = useState({
+        name:initialState.name,
+        dueDate:initialState.dueDate,
+        grossAmount:initialState.grossAmount,
+        billNo:initialState.billNo,
+        billDate:initialState.billDate,
+        gstAmount:initialState.gstAmount,
+        netAmount:initialState.netAmount,
+        notes:initialState.notes,
+        status:initialState.status
+}
+    )
 
 
 const onSubmit = async(e) =>{
