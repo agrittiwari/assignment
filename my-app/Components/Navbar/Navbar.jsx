@@ -6,7 +6,7 @@ const Navbar = ({href, routeName}) => {
   return (
     <nav className={Style.navigationWrapper}>
         <div>
-            <strong>TaxAdda</strong>
+            <strong></strong>
         </div>
         <ul className={Style.navigation}>
     {/* <li className={Style.parent}>
