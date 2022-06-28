@@ -2,15 +2,15 @@ import React from 'react'
 import { useState, useReducer } from 'react'
 import { invoiceReducer } from '../../invoiceState/invoiceReducer'
 import InvoiceStyle from './Form.module.css'
-import initialState from '../../invoiceState/invoiceState'
+import{ AddItem, PostInvoice, state } from '../../invoiceState/invoiceState'
 
 export const Addinvoice = () => {
     return (
     <div className={InvoiceStyle.invoiceDiv}>
         <div className={InvoiceStyle.itemDiv}>      
         <Item  />
-        {initialState.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
-        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))} 
+        {/* {state?.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
+        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))}  */}
          </div> 
        <RemainingForm/>
         
@@ -20,8 +20,7 @@ export const Addinvoice = () => {
 
 const Item =(props) =>{
     
-    const[state, dispatch] = useReducer(invoiceReducer,initialState)
-    const [newItem, setNewItem] = useState({
+     const [newItem, setNewItem] = useState({
         productName:'',
         quantity:'', 
         price:'',
@@ -32,10 +31,7 @@ const Item =(props) =>{
     const onItemAdd =(e) =>{
         e.preventDefault()
         console.log(newItem)
-        dispatch({
-        type:'ADD_ITEM',
-        payload:newItem
-       })
+        AddItem()
         console.log('Item added')
         }
     return( 
@@ -70,41 +66,38 @@ const Item =(props) =>{
          </form>
          <div><h4>Line Item Details</h4>
          {/* {console.log(item)} */}
-        {initialState.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
-        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))}
+        {/* {state?.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
+        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))} */}
             </div>        
      </div>)
 }
 
 const RemainingForm=()=>{
-    const[state, dispatch] = useReducer(invoiceReducer,initialState)
+   
 
     const [newInvoice,setNewInvoice] = useState({
-        name:initialState.name,
-        dueDate:initialState.dueDate,
-        grossAmount:initialState.grossAmount,
-        billNo:initialState.billNo,
-        billDate:initialState.billDate,
-        gstAmount:initialState.gstAmount,
-        netAmount:initialState.netAmount,
-        notes:initialState.notes,
-        status:initialState.status
-}
-    )
+        name:'',  
+        dueDate:'',  
+        grossAmount:'',
+        billNo:'',      
+        billDate:'',        
+        gstAmount:'',
+        netAmount:'',
+        notes:'',     
+        status:'', 
+    }  )
 
 
 const onSubmit = async(e) =>{
     e.preventDefault()
     console.log('submit pressed')
-    dispatch({
-        type:'ADD_INVOICE',
-        payload:newInvoice
-    })
+    PostInvoice();
+    console.log('post invoice called')
 
     try {
         const res = await fetch('https://rscdev.taxadda.com/api/invoice/add', {
             method: 'post',    
-        body:[newInvoice]
+        body:[state]
         })
            const status=   await res.json()
      console.log(status)
