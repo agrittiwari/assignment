@@ -1,18 +1,19 @@
 import React from 'react'
-import { useState, useReducer } from 'react'
-import { invoiceReducer } from '../../invoiceState/invoiceReducer'
+import { useState, useContext } from 'react'
+import InvoiceContext from '../../invoiceState/InvoiceContext'
 import InvoiceStyle from './Form.module.css'
-import{ AddItem, PostInvoice, state } from '../../invoiceState/invoiceState'
 
 export const Addinvoice = () => {
+    const invoiceContext = useContext(InvoiceContext)
+
+    const { AddItem, PostInvoice, state } =invoiceContext
     return (
     <div className={InvoiceStyle.invoiceDiv}>
         <div className={InvoiceStyle.itemDiv}>      
-        <Item  />
-        {/* {state?.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
-        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))}  */}
+        <Item  AddItem= {AddItem}  state={state}/>
+      
          </div> 
-       <RemainingForm/>
+       <RemainingForm PostInvoice={PostInvoice}/>
         
     </div>
   )
@@ -31,8 +32,13 @@ const Item =(props) =>{
     const onItemAdd =(e) =>{
         e.preventDefault()
         console.log(newItem)
-        AddItem()
+        props.AddItem(newItem)
         console.log('Item added')
+        setNewItem({  productName:'',
+        quantity:'', 
+        price:'',
+        amount:'',
+        gstRate:''})
         }
     return( 
         <div className={InvoiceStyle.itemForm}>
@@ -65,15 +71,21 @@ const Item =(props) =>{
             </ul>
          </form>
          <div><h4>Line Item Details</h4>
-         {/* {console.log(item)} */}
-        {/* {state?.lineItem?.map((index,item)=>(<div key={index}> <h3>{item.productName}</h3>
-        <li>{item.quantity}</li>{item.price}<li></li>{item.gstRate}<li>{item.amount}</li></div>))} */}
+         {console.log(props.state?.lineItem)}
+        {props.state?.lineItem?.map((item,index)=>(<ul className={InvoiceStyle.ItemEntry}key={index}> 
+        <li><strong>{item.productName}</strong></li>
+        <li>{item.quantity}</li>
+        <li>{item.price}</li>
+        <li>{item.gstRate}</li>
+        <li>{item.amount}</li>
+        </ul>))}
             </div>        
      </div>)
 }
 
-const RemainingForm=()=>{
+const RemainingForm=(props)=>{
    
+    const[invoiceStatus, setInvoiceStatus] = useState(false)
 
     const [newInvoice,setNewInvoice] = useState({
         name:'',  
@@ -81,6 +93,7 @@ const RemainingForm=()=>{
         grossAmount:'',
         billNo:'',      
         billDate:'',        
+        lineItem: props.state?.lineItem,
         gstAmount:'',
         netAmount:'',
         notes:'',     
@@ -91,21 +104,21 @@ const RemainingForm=()=>{
 const onSubmit = async(e) =>{
     e.preventDefault()
     console.log('submit pressed')
-    PostInvoice();
+    props.PostInvoice(newInvoice);
     console.log('post invoice called')
-
-    try {
-        const res = await fetch('https://rscdev.taxadda.com/api/invoice/add', {
-            method: 'post',    
-        body:[state]
-        })
-           const status=   await res.json()
-     console.log(status)
-        //    return res.status;    
-    } catch (err) {
-        console.error({msg: err.message})
-    }
-    
+    setNewInvoice({
+        name:'',  
+        dueDate:'',  
+        grossAmount:'',
+        billNo:'',      
+        billDate:'',        
+        lineItem: props.state?.lineItem,
+        gstAmount:'',
+        netAmount:'',
+        notes:'',     
+        status:'', 
+    }  )
+    setInvoiceStatus(true);    
 }
   return( <div className={InvoiceStyle.invoiceDiv1}>
         <form onSubmit={onSubmit}>
@@ -152,5 +165,6 @@ const onSubmit = async(e) =>{
                  <button className={InvoiceStyle.submitBtn} type="submit">Add Invoice</button>
              </li></ul>
         </form>
+        {invoiceStatus && <h1>Invoice Added</h1>}
         </div>)
 }

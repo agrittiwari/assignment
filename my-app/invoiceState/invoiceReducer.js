@@ -4,7 +4,7 @@ export const invoiceReducer =(state, action) =>{
             return {
                 ...state,
                 ...action.payload,
-                //  lineItem: state.lineItem,
+                 lineItem: state.lineItem,
             }
         }
             break;
@@ -14,6 +14,10 @@ export const invoiceReducer =(state, action) =>{
                 lineItem:[action.payload, ...state.lineItem]
             }}
             break;
+        case 'SET_STATUS':{
+            status: !state.status
+        }
+        break;
         default:
             break;
     }
