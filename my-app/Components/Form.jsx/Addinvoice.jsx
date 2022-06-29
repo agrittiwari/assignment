@@ -42,7 +42,7 @@ const Item =(props) =>{
         }
     return( 
         <div className={InvoiceStyle.itemForm}>
-         <h3>Line Item Form</h3>
+        
          <form onSubmit={onItemAdd}>
             <ul className={InvoiceStyle.ItemEntry}>
              <li>
@@ -70,7 +70,7 @@ const Item =(props) =>{
              </li>
             </ul>
          </form>
-         <div><h4>Line Item Details</h4>
+         <div className={InvoiceStyle.addedItem}><h4>Line Item Details</h4>
          {console.log(props.state?.lineItem)}
         {props.state?.lineItem?.map((item,index)=>(<ul className={InvoiceStyle.ItemEntry}key={index}> 
         <li><strong>{item.productName}</strong></li>

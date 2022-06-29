@@ -1,3 +1,85 @@
 .invoice{
-    background-color: red;
+    background-color: rgb(200, 181, 181);
+    border: 1px white solid;
+    margin: 2%;
+}
+
+.bill{
+    background-color: white;
+    border-radius: 25px;
+    display: block;
+    padding: 1%;
+    margin-left:5%;
+    width: 80%;
+    
+}
+.invoiceDate{
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+border-bottom: 1px grey solid;
+}
+
+.div1{
+background-color: #e2e2e2;
+padding: 10px;
+}
+
+.div2{
+    background-color: burlywood;
+    /* border-radius: 25px; */
+    display: block;
+    padding: 1%;
+    margin-top: 10px;
+    /* margin-left:5%; */
+    /* width: 80%; */
+}
+
+.item{
+background-color: azure;
+}
+
+.itemDiv{
+     list-style: none;
+     display: flex;
+    flex-direction: row;
+   
+    background-color: #e2e2e2;
+    padding:3px;
+}
+.itemDiv1  > li{
+    padding: 12px;
+    /* width: 120px; */
+}
+
+.lowerSection{
+    background-color: #e2e2e2;
+}
+.lowerDiv1of2{
+    background-color: tomato;
+}
+.lowerDiv2of2{
+ display: flex;
+ flex-direction: column;
+ list-style: none;   
+}
+.lowerDiv2of2 >li{
+    display: flex;
+    flex-direction: row;
+align-items: center;
+    background-color: rgb(164, 212, 214);
+    padding-left: 80%;
+    border-right: 1px solid black;
+   
+    font-size:18px ;
+}
+
+.notesDiv{
+    display: flex;
+    flex-direction: row;
+}
+
+.notesDiv>p{
+    padding: 10px;
 }

@@ -14,7 +14,7 @@ export const List = () => {
     // render data
     const {invoiceData} = data;
   return (
-    <div>
+    <div className={Style.bg}>
         <Heading/>
         {invoiceData.invoices.map(invoice => <ListItem key ={invoice._id} invoice={invoice}/>)}
         
@@ -26,15 +26,15 @@ export const List = () => {
 
 const Heading = () =>{
     return(
-        <div>
-            <ul className={Style.row}>
-                <li>S No.</li>
-                <li>Name</li>
-                <li>Bill no.</li>
-                <li>Bill Date</li>
-                <li>Net Amount</li>
-                <li>Status</li>
-                <li> Bill Details</li>
+        <div style={{backgroundColor:"#222"}}>
+            <ul className={Style.headRow}>
+                <li><strong>S No.</strong></li>
+                <li><strong>Name</strong></li>
+                <li><strong>Bill no.</strong></li>
+                <li><strong>Bill Date</strong></li>
+                <li><strong>Net Amount</strong></li>
+                <li><strong>Status</strong></li>
+                <li><strong> Bill Details</strong></li>
             </ul>
         </div>
     )

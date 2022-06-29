@@ -1,11 +1,36 @@
 .row{
-    display: flex;
-    flex-direction: row;
+    width: 80%;
     list-style: none;
+    padding: 3px;
+    margin: 20px;
+    margin-left: 100px;
+    display:flex ;
+background-color: #ea4f4c;
+border-radius: 25px;
+    flex-direction: row;
     
 }
-
+.headRow{
+    width: 80%;
+    list-style: none;
+    padding: 3px;
+    margin: 20px;
+    margin-left: 100px;
+    display:flex ;
+background-color: white;
+border-radius: 25px;
+    flex-direction: row;
+    
+}
+.headRow > li{
+    padding: 12px;
+    width: 120px;
+}
 .row > li{
     padding: 12px;
     width: 120px;
+}
+
+.bg{
+    background-color: #222;
 }

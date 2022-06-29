@@ -1,18 +1,19 @@
 .invoiceDiv{
     padding: 30px;
-    background-color: greenyellow
 }
 
 .invoiceDiv1{
     padding: 30px;
-    background-color: burlywood
+    
 }
 
 .itemDiv{
     display: flex;
     flex-direction: column;
     padding: 30px;
-    background-color: yellow;
+}
+.addedItem{
+    background-color: aliceblue;
 }
 .entry{
     width: 100%;
@@ -46,7 +47,7 @@ background-color: tomato;
    margin: 3px;
 }
 .itemForm{
-    background-color: blueviolet;
+    
     padding: 5px;
 max-width: 100%;
 }

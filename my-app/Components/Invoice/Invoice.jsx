@@ -1,25 +1,43 @@
 // div for the total Invoice
 import React from 'react'
-import useSWR from 'swr'
-import fetcher from '../../lib/fetcher'
+
 import Style from './Invoice.module.css'
 const Invoice = (props) => {
   const {selectedInvoice} = props
    console.log(selectedInvoice)
-     const {  name,  dueDate, billNo,  billDate,  lineItem,  grossAmount,  gstAmount,  netAmount,  notes,  status,  createdAt,  updatedAt } = selectedInvoice
+     const {  name,  dueDate, billNo,  billDate,  lineItem,  grossAmount,  gstAmount,  netAmount,  notes,    createdAt,  updatedAt } = selectedInvoice
     return (
     <div className={Style.invoice}>
-        <div className={Style.div1}>
-<strong>Name</strong><span>{name}</span>
-        </div>
-        <div className={Style.div2}>
-          Invoice Bill Component
-          
-        {lineItem.map(item => <Item key={item._id} item={item}/>)}
-             
-
-        </div>
+      <div className={Style.bill}>
+                <div className={Style.invoiceDate}>
+                  <div className={Style.date}><strong>Date: </strong><span>{billDate.slice(0, 10)}</span></div>
+                  <div className={Style.billNo}><p>Bill No.<strong>{billNo}</strong></p></div>
+                </div>
+                  <div className={Style.div1}>
+          <strong>Name -</strong><span>{name}</span>
+                  </div>
+                  <div className={Style.div2}>     
+                  {lineItem.map(item => <Item key={item._id} item={item}/>)}
+                  </div>
+                  <div className={Style.lowerSection}>
+            <div className={Style.lowerDiv1of2}>
+            <strong>Due Date: </strong><span>{dueDate.slice(0, 10)}</span>
+            </div>
+            <div className={Style.lowerDiv2of2}>
+            <li><h6>Gross Amount</h6><span>{grossAmount}</span></li>
+            <li><h6>GST Amount </h6><span>{gstAmount}</span></li>
+            <li><h6>Net Amount </h6><span>{netAmount}</span></li>
+            </div>
+            </div>
+            <div className={Style.notesDiv}>
+            <p>Updated at: <span>{updatedAt.slice(0, 10)}</span></p>
+            <p>Created at : <span>{createdAt.slice(0, 10)}</span></p>
+          <p>Note : <span>{notes}</span></p>
+            </div>
     </div>
+      </div>
+
+     
   )
 }
 
@@ -30,8 +48,12 @@ const Item =(props) =>{
     gstRate} =props.item
     return(
         <div className={Style.item}>
- <div className={Style.itemdiv1}>{productName}</div>
- <div className={Style.itemDiv2}>{price || amount}</div>
+ <ul className={Style.itemdiv}>
+  <li><strong>{productName}</strong></li>
+  <li><p>{gstRate}(GST Rate)</p></li>
+  <li><p>{quantity}</p></li> 
+  <li><p>{price||amount}</p></li>
+  </ul>
         </div>
        
     )
